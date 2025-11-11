@@ -102,7 +102,7 @@ export default function LeaderPage() {
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-4 gap-2">
                   <div className="bg-green-50 rounded-xl p-3 text-center">
                     <p className="text-2xl font-bold text-green-600">
                       {perf.converted_leads}
@@ -120,6 +120,12 @@ export default function LeaderPage() {
                       {perf.contacted_leads}
                     </p>
                     <p className="text-xs text-gray-600 mt-1">Görüşülen</p>
+                  </div>
+                  <div className="bg-orange-50 rounded-xl p-3 text-center">
+                    <p className="text-2xl font-bold text-orange-600">
+                      {perf.ad_credits || 0}
+                    </p>
+                    <p className="text-xs text-gray-600 mt-1">Reklam</p>
                   </div>
                 </div>
               </div>

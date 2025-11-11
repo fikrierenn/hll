@@ -8,7 +8,8 @@
     "leader_id": "4",
     "region": "İstanbul",
     "is_active": true,
-    "fcm_token": "fcm_token_1"
+    "fcm_token": "fcm_token_1",
+    "ad_credits": 15
   },
   {
     "id": "2",
@@ -19,7 +20,8 @@
     "leader_id": "4",
     "region": "Ankara",
     "is_active": true,
-    "fcm_token": "fcm_token_2"
+    "fcm_token": "fcm_token_2",
+    "ad_credits": 8
   },
   {
     "id": "3",
@@ -30,7 +32,8 @@
     "leader_id": "4",
     "region": "İzmir",
     "is_active": true,
-    "fcm_token": "fcm_token_3"
+    "fcm_token": "fcm_token_3",
+    "ad_credits": 22
   },
   {
     "id": "4",
@@ -52,7 +55,8 @@
     "leader_id": "6",
     "region": "Bursa",
     "is_active": true,
-    "fcm_token": "fcm_token_5"
+    "fcm_token": "fcm_token_5",
+    "ad_credits": 12
   },
   {
     "id": "6",

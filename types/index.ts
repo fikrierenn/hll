@@ -14,6 +14,7 @@ export interface User {
   region: string;
   is_active: boolean;
   fcm_token: string;
+  ad_credits?: number;
 }
 
 // Lead
@@ -74,4 +75,5 @@ export interface TeamPerformance {
   converted_leads: number;
   avg_response_minutes: number;
   sales_ratio: number;
+  ad_credits?: number;
 }

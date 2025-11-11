@@ -210,6 +210,7 @@ export const mockApi = {
         converted_leads: convertedLeads,
         avg_response_minutes: Math.round(avgResponseMinutes * 10) / 10,
         sales_ratio: Math.round(salesRatio * 10) / 10,
+        ad_credits: member.ad_credits || 0,
       };
     });
     
