@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { User, Mail, Phone, MapPin, LogOut, Settings, Bell, HelpCircle, Shield } from 'lucide-react';
 import { MobileHeader } from '@/components/layout/MobileHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
+import { Footer } from '@/components/layout/Footer';
 
 export default function RepresentativeProfile() {
   const router = useRouter();
@@ -134,6 +135,7 @@ export default function RepresentativeProfile() {
         </div>
       </div>
 
+      <Footer />
       <BottomNav role="representative" />
     </div>
   );

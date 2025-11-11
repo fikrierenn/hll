@@ -8,6 +8,7 @@ import { formatMinutes, formatPercentage, getStatusLabel } from '@/lib/utils';
 import { TrendingUp, Clock, Target, CheckCircle, Award, Zap } from 'lucide-react';
 import { MobileHeader } from '@/components/layout/MobileHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
+import { Footer } from '@/components/layout/Footer';
 import { StatCard } from '@/components/ui/StatCard';
 
 export default function RepresentativeDashboard() {
@@ -202,6 +203,7 @@ export default function RepresentativeDashboard() {
         </div>
       </div>
 
+      <Footer />
       <BottomNav role="representative" />
     </div>
   );

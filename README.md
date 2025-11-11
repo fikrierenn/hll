@@ -162,4 +162,14 @@ Bu proje özel bir projedir.
 
 ---
 
+<div align="center">
+
+**Powered by [Pivoter](https://pivoter.com.tr)**
+
+*Network Marketing ve Satış Ekipleri için Dijital Çözümler*
+
+</div>
+
+---
+
 **Not**: Bu proje şu anda prototype aşamasındadır ve mock data ile çalışmaktadır. Production kullanımı için backend entegrasyonu gereklidir.

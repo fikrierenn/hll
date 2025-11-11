@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { BarChart3, TrendingUp, Users, Award, MapPin, Calendar } from 'lucide-react';
 import { MobileHeader } from '@/components/layout/MobileHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
+import { Footer } from '@/components/layout/Footer';
 import { performanceData, usersData, leadsData } from '@/lib/mock-data';
 import type { PerformanceSummary, User, Lead } from '@/types';
 
@@ -308,6 +309,7 @@ export default function SuperLeaderAnalyticsPage() {
         </div>
       </div>
 
+      <Footer />
       <BottomNav role="super_leader" />
     </div>
   );

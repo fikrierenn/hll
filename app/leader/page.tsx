@@ -8,6 +8,7 @@ import { Users, Award } from 'lucide-react';
 import { formatPercentage, formatMinutes } from '@/lib/utils';
 import { MobileHeader } from '@/components/layout/MobileHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
+import { Footer } from '@/components/layout/Footer';
 
 export default function LeaderPage() {
   const router = useRouter();
@@ -147,6 +148,7 @@ export default function LeaderPage() {
         )}
       </div>
 
+      <Footer />
       <BottomNav role="leader" />
     </div>
   );

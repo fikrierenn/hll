@@ -9,6 +9,7 @@ import { Phone, MessageCircle, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { MobileHeader } from '@/components/layout/MobileHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
+import { Footer } from '@/components/layout/Footer';
 
 export default function RepresentativePage() {
   const router = useRouter();
@@ -147,6 +148,7 @@ export default function RepresentativePage() {
         )}
       </div>
 
+      <Footer />
       <BottomNav role="representative" />
     </div>
   );

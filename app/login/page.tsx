@@ -119,6 +119,10 @@ export default function LoginPage() {
           <p className="text-center text-xs text-gray-500 mt-4">
             Demo modunda çalışıyorsunuz
           </p>
+
+          <div className="text-center text-xs text-gray-400 mt-6">
+            <p>Powered by <span className="font-semibold text-gray-500">PivotEra</span></p>
+          </div>
         </div>
       </div>
     </div>

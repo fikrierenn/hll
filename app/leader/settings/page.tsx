@@ -7,6 +7,7 @@ import { User } from '@/types';
 import { Settings, Users, UserPlus, ToggleLeft, ToggleRight, X, Bell, Shield, HelpCircle } from 'lucide-react';
 import { MobileHeader } from '@/components/layout/MobileHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
+import { Footer } from '@/components/layout/Footer';
 
 export default function LeaderSettingsPage() {
   const router = useRouter();
@@ -197,6 +198,7 @@ export default function LeaderSettingsPage() {
         </div>
       </div>
 
+      <Footer />
       <BottomNav role="leader" />
 
       {/* Add Representative Modal */}

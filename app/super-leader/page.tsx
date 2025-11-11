@@ -8,6 +8,7 @@ import { Target, TrendingUp, Users, Clock, MapPin } from 'lucide-react';
 import { formatPercentage } from '@/lib/utils';
 import { MobileHeader } from '@/components/layout/MobileHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
+import { Footer } from '@/components/layout/Footer';
 import { StatCard } from '@/components/ui/StatCard';
 
 export default function SuperLeaderPage() {
@@ -181,6 +182,7 @@ export default function SuperLeaderPage() {
         </div>
       </div>
 
+      <Footer />
       <BottomNav role="super_leader" />
     </div>
   );

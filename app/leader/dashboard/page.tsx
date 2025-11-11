@@ -8,6 +8,7 @@ import { TrendingUp, Users, Target, Award, Clock, Calendar } from 'lucide-react'
 import { formatPercentage, formatMinutes } from '@/lib/utils';
 import { MobileHeader } from '@/components/layout/MobileHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
+import { Footer } from '@/components/layout/Footer';
 
 export default function LeaderDashboard() {
   const router = useRouter();
@@ -203,6 +204,7 @@ export default function LeaderDashboard() {
         </div>
       </div>
 
+      <Footer />
       <BottomNav role="leader" />
     </div>
   );

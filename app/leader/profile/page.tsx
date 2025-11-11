@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { User, Mail, Phone, MapPin, LogOut, Settings, Bell, HelpCircle, Shield, Users } from 'lucide-react';
 import { MobileHeader } from '@/components/layout/MobileHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
+import { Footer } from '@/components/layout/Footer';
 
 export default function LeaderProfile() {
   const router = useRouter();
@@ -94,6 +95,7 @@ export default function LeaderProfile() {
         </div>
       </div>
 
+      <Footer />
       <BottomNav role="leader" />
     </div>
   );
