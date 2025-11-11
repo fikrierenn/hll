@@ -1,0 +1,90 @@
+[
+  {
+    "id": "perf-1",
+    "user_id": "1",
+    "date": "2025-11-10",
+    "total_leads": 5,
+    "contacted_leads": 3,
+    "converted_leads": 1,
+    "lost_leads": 0,
+    "avg_response_minutes": 8.5,
+    "sales_ratio": 20.0
+  },
+  {
+    "id": "perf-2",
+    "user_id": "2",
+    "date": "2025-11-10",
+    "total_leads": 4,
+    "contacted_leads": 3,
+    "converted_leads": 2,
+    "lost_leads": 0,
+    "avg_response_minutes": 6.2,
+    "sales_ratio": 50.0
+  },
+  {
+    "id": "perf-3",
+    "user_id": "3",
+    "date": "2025-11-10",
+    "total_leads": 4,
+    "contacted_leads": 3,
+    "converted_leads": 2,
+    "lost_leads": 1,
+    "avg_response_minutes": 5.8,
+    "sales_ratio": 50.0
+  },
+  {
+    "id": "perf-4",
+    "user_id": "5",
+    "date": "2025-11-10",
+    "total_leads": 3,
+    "contacted_leads": 1,
+    "converted_leads": 0,
+    "lost_leads": 1,
+    "avg_response_minutes": 12.0,
+    "sales_ratio": 0.0
+  },
+  {
+    "id": "perf-5",
+    "user_id": "1",
+    "date": "2025-11-09",
+    "total_leads": 3,
+    "contacted_leads": 2,
+    "converted_leads": 1,
+    "lost_leads": 0,
+    "avg_response_minutes": 7.3,
+    "sales_ratio": 33.3
+  },
+  {
+    "id": "perf-6",
+    "user_id": "2",
+    "date": "2025-11-09",
+    "total_leads": 3,
+    "contacted_leads": 2,
+    "converted_leads": 1,
+    "lost_leads": 1,
+    "avg_response_minutes": 8.1,
+    "sales_ratio": 33.3
+  },
+  {
+    "id": "perf-7",
+    "user_id": "3",
+    "date": "2025-11-09",
+    "total_leads": 2,
+    "contacted_leads": 2,
+    "converted_leads": 1,
+    "lost_leads": 1,
+    "avg_response_minutes": 6.5,
+    "sales_ratio": 50.0
+  },
+  {
+    "id": "perf-8",
+    "user_id": "5",
+    "date": "2025-11-09",
+    "total_leads": 2,
+    "contacted_leads": 1,
+    "converted_leads": 0,
+    "lost_leads": 0,
+    "avg_response_minutes": 10.5,
+    "sales_ratio": 0.0
+  }
+]

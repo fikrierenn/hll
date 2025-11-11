@@ -1,0 +1,377 @@
+[
+  {
+    "id": "lead-1",
+    "full_name": "Elif Şahin",
+    "phone": "05321112233",
+    "city": "İstanbul",
+    "form_time": "2025-11-10T14:25:00Z",
+    "assigned_to": "1",
+    "status": "new",
+    "assigned_at": "2025-11-10T14:30:00Z",
+    "meta_lead_id": "meta_123456",
+    "form_data": {
+      "source": "Facebook",
+      "campaign": "Kış Kampanyası"
+    }
+  },
+  {
+    "id": "lead-2",
+    "full_name": "Can Yılmaz",
+    "phone": "05334445566",
+    "city": "Ankara",
+    "form_time": "2025-11-10T10:10:00Z",
+    "assigned_to": "2",
+    "status": "contacted",
+    "assigned_at": "2025-11-10T10:15:00Z",
+    "meta_lead_id": "meta_123457",
+    "form_data": {
+      "source": "Instagram",
+      "campaign": "Sonbahar İndirimi"
+    }
+  },
+  {
+    "id": "lead-3",
+    "full_name": "Selin Kaya",
+    "phone": "05447778899",
+    "city": "İzmir",
+    "form_time": "2025-11-10T09:00:00Z",
+    "assigned_to": "3",
+    "status": "converted",
+    "assigned_at": "2025-11-10T09:05:00Z",
+    "meta_lead_id": "meta_123458",
+    "form_data": {
+      "source": "Facebook",
+      "campaign": "Yeni Ürün Lansmanı"
+    }
+  },
+  {
+    "id": "lead-4",
+    "full_name": "Burak Demir",
+    "phone": "05551234567",
+    "city": "İstanbul",
+    "form_time": "2025-11-10T08:30:00Z",
+    "assigned_to": "1",
+    "status": "contacted",
+    "assigned_at": "2025-11-10T08:35:00Z",
+    "meta_lead_id": "meta_123459",
+    "form_data": {
+      "source": "Instagram",
+      "campaign": "Kış Kampanyası"
+    }
+  },
+  {
+    "id": "lead-5",
+    "full_name": "Deniz Öztürk",
+    "phone": "05669876543",
+    "city": "Bursa",
+    "form_time": "2025-11-09T16:45:00Z",
+    "assigned_to": "5",
+    "status": "lost",
+    "assigned_at": "2025-11-09T16:50:00Z",
+    "meta_lead_id": "meta_123460",
+    "form_data": {
+      "source": "Facebook",
+      "campaign": "Sonbahar İndirimi"
+    }
+  },
+  {
+    "id": "lead-6",
+    "full_name": "Ece Arslan",
+    "phone": "05771112233",
+    "city": "Ankara",
+    "form_time": "2025-11-09T15:20:00Z",
+    "assigned_to": "2",
+    "status": "converted",
+    "assigned_at": "2025-11-09T15:25:00Z",
+    "meta_lead_id": "meta_123461",
+    "form_data": {
+      "source": "Instagram",
+      "campaign": "Kış Kampanyası"
+    }
+  },
+  {
+    "id": "lead-7",
+    "full_name": "Murat Çelik",
+    "phone": "05883334455",
+    "city": "İzmir",
+    "form_time": "2025-11-09T14:00:00Z",
+    "assigned_to": "3",
+    "status": "contacted",
+    "assigned_at": "2025-11-09T14:05:00Z",
+    "meta_lead_id": "meta_123462",
+    "form_data": {
+      "source": "Facebook",
+      "campaign": "Yeni Ürün Lansmanı"
+    }
+  },
+  {
+    "id": "lead-8",
+    "full_name": "Aylin Yıldız",
+    "phone": "05995556677",
+    "city": "İstanbul",
+    "form_time": "2025-11-09T13:30:00Z",
+    "assigned_to": "1",
+    "status": "new",
+    "assigned_at": "2025-11-09T13:35:00Z",
+    "meta_lead_id": "meta_123463",
+    "form_data": {
+      "source": "Instagram",
+      "campaign": "Sonbahar İndirimi"
+    }
+  },
+  {
+    "id": "lead-9",
+    "full_name": "Kerem Aydın",
+    "phone": "05321239876",
+    "city": "Bursa",
+    "form_time": "2025-11-09T12:00:00Z",
+    "assigned_to": "5",
+    "status": "contacted",
+    "assigned_at": "2025-11-09T12:05:00Z",
+    "meta_lead_id": "meta_123464",
+    "form_data": {
+      "source": "Facebook",
+      "campaign": "Kış Kampanyası"
+    }
+  },
+  {
+    "id": "lead-10",
+    "full_name": "Gizem Şen",
+    "phone": "05334567890",
+    "city": "Ankara",
+    "form_time": "2025-11-09T11:15:00Z",
+    "assigned_to": "2",
+    "status": "converted",
+    "assigned_at": "2025-11-09T11:20:00Z",
+    "meta_lead_id": "meta_123465",
+    "form_data": {
+      "source": "Instagram",
+      "campaign": "Yeni Ürün Lansmanı"
+    }
+  },
+  {
+    "id": "lead-11",
+    "full_name": "Onur Koç",
+    "phone": "05447891234",
+    "city": "İzmir",
+    "form_time": "2025-11-08T17:30:00Z",
+    "assigned_to": "3",
+    "status": "lost",
+    "assigned_at": "2025-11-08T17:35:00Z",
+    "meta_lead_id": "meta_123466",
+    "form_data": {
+      "source": "Facebook",
+      "campaign": "Sonbahar İndirimi"
+    }
+  },
+  {
+    "id": "lead-12",
+    "full_name": "Pınar Güneş",
+    "phone": "05556781234",
+    "city": "İstanbul",
+    "form_time": "2025-11-08T16:00:00Z",
+    "assigned_to": "1",
+    "status": "contacted",
+    "assigned_at": "2025-11-08T16:05:00Z",
+    "meta_lead_id": "meta_123467",
+    "form_data": {
+      "source": "Instagram",
+      "campaign": "Kış Kampanyası"
+    }
+  },
+  {
+    "id": "lead-13",
+    "full_name": "Serkan Acar",
+    "phone": "05669871234",
+    "city": "Bursa",
+    "form_time": "2025-11-08T15:00:00Z",
+    "assigned_to": "5",
+    "status": "new",
+    "assigned_at": "2025-11-08T15:05:00Z",
+    "meta_lead_id": "meta_123468",
+    "form_data": {
+      "source": "Facebook",
+      "campaign": "Yeni Ürün Lansmanı"
+    }
+  },
+  {
+    "id": "lead-14",
+    "full_name": "Tuğba Yavuz",
+    "phone": "05771234567",
+    "city": "Ankara",
+    "form_time": "2025-11-08T14:30:00Z",
+    "assigned_to": "2",
+    "status": "contacted",
+    "assigned_at": "2025-11-08T14:35:00Z",
+    "meta_lead_id": "meta_123469",
+    "form_data": {
+      "source": "Instagram",
+      "campaign": "Sonbahar İndirimi"
+    }
+  },
+  {
+    "id": "lead-15",
+    "full_name": "Emre Polat",
+    "phone": "05889876543",
+    "city": "İzmir",
+    "form_time": "2025-11-08T13:00:00Z",
+    "assigned_to": "3",
+    "status": "converted",
+    "assigned_at": "2025-11-08T13:05:00Z",
+    "meta_lead_id": "meta_123470",
+    "form_data": {
+      "source": "Facebook",
+      "campaign": "Kış Kampanyası"
+    }
+  },
+  {
+    "id": "lead-16",
+    "full_name": "Ceren Taş",
+    "phone": "05991234567",
+    "city": "İstanbul",
+    "form_time": "2025-11-07T18:00:00Z",
+    "assigned_to": "1",
+    "status": "new",
+    "assigned_at": "2025-11-07T18:05:00Z",
+    "meta_lead_id": "meta_123471",
+    "form_data": {
+      "source": "Instagram",
+      "campaign": "Yeni Ürün Lansmanı"
+    }
+  },
+  {
+    "id": "lead-17",
+    "full_name": "Barış Kurt",
+    "phone": "05325678901",
+    "city": "Bursa",
+    "form_time": "2025-11-07T16:30:00Z",
+    "assigned_to": "5",
+    "status": "contacted",
+    "assigned_at": "2025-11-07T16:35:00Z",
+    "meta_lead_id": "meta_123472",
+    "form_data": {
+      "source": "Facebook",
+      "campaign": "Sonbahar İndirimi"
+    }
+  },
+  {
+    "id": "lead-18",
+    "full_name": "Nihan Özkan",
+    "phone": "05336789012",
+    "city": "Ankara",
+    "form_time": "2025-11-07T15:00:00Z",
+    "assigned_to": "2",
+    "status": "lost",
+    "assigned_at": "2025-11-07T15:05:00Z",
+    "meta_lead_id": "meta_123473",
+    "form_data": {
+      "source": "Instagram",
+      "campaign": "Kış Kampanyası"
+    }
+  },
+  {
+    "id": "lead-19",
+    "full_name": "Tolga Erdoğan",
+    "phone": "05447890123",
+    "city": "İzmir",
+    "form_time": "2025-11-07T14:00:00Z",
+    "assigned_to": "3",
+    "status": "contacted",
+    "assigned_at": "2025-11-07T14:05:00Z",
+    "meta_lead_id": "meta_123474",
+    "form_data": {
+      "source": "Facebook",
+      "campaign": "Yeni Ürün Lansmanı"
+    }
+  },
+  {
+    "id": "lead-20",
+    "full_name": "Sibel Kılıç",
+    "phone": "05558901234",
+    "city": "İstanbul",
+    "form_time": "2025-11-07T13:00:00Z",
+    "assigned_to": "1",
+    "status": "converted",
+    "assigned_at": "2025-11-07T13:05:00Z",
+    "meta_lead_id": "meta_123475",
+    "form_data": {
+      "source": "Instagram",
+      "campaign": "Sonbahar İndirimi"
+    }
+  },
+  {
+    "id": "lead-21",
+    "full_name": "Hakan Yurt",
+    "phone": "05669012345",
+    "city": "Bursa",
+    "form_time": "2025-11-06T17:00:00Z",
+    "assigned_to": "5",
+    "status": "new",
+    "assigned_at": "2025-11-06T17:05:00Z",
+    "meta_lead_id": "meta_123476",
+    "form_data": {
+      "source": "Facebook",
+      "campaign": "Kış Kampanyası"
+    }
+  },
+  {
+    "id": "lead-22",
+    "full_name": "Merve Doğan",
+    "phone": "05779123456",
+    "city": "Ankara",
+    "form_time": "2025-11-06T16:00:00Z",
+    "assigned_to": "2",
+    "status": "contacted",
+    "assigned_at": "2025-11-06T16:05:00Z",
+    "meta_lead_id": "meta_123477",
+    "form_data": {
+      "source": "Instagram",
+      "campaign": "Yeni Ürün Lansmanı"
+    }
+  },
+  {
+    "id": "lead-23",
+    "full_name": "Cem Aksoy",
+    "phone": "05880234567",
+    "city": "İzmir",
+    "form_time": "2025-11-06T15:00:00Z",
+    "assigned_to": "3",
+    "status": "converted",
+    "assigned_at": "2025-11-06T15:05:00Z",
+    "meta_lead_id": "meta_123478",
+    "form_data": {
+      "source": "Facebook",
+      "campaign": "Sonbahar İndirimi"
+    }
+  },
+  {
+    "id": "lead-24",
+    "full_name": "Derya Tekin",
+    "phone": "05991345678",
+    "city": "İstanbul",
+    "form_time": "2025-11-06T14:00:00Z",
+    "assigned_to": "1",
+    "status": "contacted",
+    "assigned_at": "2025-11-06T14:05:00Z",
+    "meta_lead_id": "meta_123479",
+    "form_data": {
+      "source": "Instagram",
+      "campaign": "Kış Kampanyası"
+    }
+  },
+  {
+    "id": "lead-25",
+    "full_name": "Kaan Özdemir",
+    "phone": "05322456789",
+    "city": "Bursa",
+    "form_time": "2025-11-06T13:00:00Z",
+    "assigned_to": "5",
+    "status": "lost",
+    "assigned_at": "2025-11-06T13:05:00Z",
+    "meta_lead_id": "meta_123480",
+    "form_data": {
+      "source": "Facebook",
+      "campaign": "Yeni Ürün Lansmanı"
+    }
+  }
+]

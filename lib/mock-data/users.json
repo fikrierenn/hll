@@ -1,0 +1,79 @@
+[
+  {
+    "id": "1",
+    "email": "ayse.yilmaz@hll.com",
+    "name": "Ayşe Yılmaz",
+    "phone": "05321234567",
+    "role": "representative",
+    "leader_id": "4",
+    "region": "İstanbul",
+    "is_active": true,
+    "fcm_token": "fcm_token_1"
+  },
+  {
+    "id": "2",
+    "email": "mehmet.kaya@hll.com",
+    "name": "Mehmet Kaya",
+    "phone": "05339876543",
+    "role": "representative",
+    "leader_id": "4",
+    "region": "Ankara",
+    "is_active": true,
+    "fcm_token": "fcm_token_2"
+  },
+  {
+    "id": "3",
+    "email": "zeynep.demir@hll.com",
+    "name": "Zeynep Demir",
+    "phone": "05445556677",
+    "role": "representative",
+    "leader_id": "4",
+    "region": "İzmir",
+    "is_active": true,
+    "fcm_token": "fcm_token_3"
+  },
+  {
+    "id": "4",
+    "email": "ali.ozturk@hll.com",
+    "name": "Ali Öztürk",
+    "phone": "05551112233",
+    "role": "leader",
+    "leader_id": null,
+    "region": "Marmara",
+    "is_active": true,
+    "fcm_token": "fcm_token_4"
+  },
+  {
+    "id": "5",
+    "email": "fatma.celik@hll.com",
+    "name": "Fatma Çelik",
+    "phone": "05667778899",
+    "role": "representative",
+    "leader_id": "6",
+    "region": "Bursa",
+    "is_active": true,
+    "fcm_token": "fcm_token_5"
+  },
+  {
+    "id": "6",
+    "email": "hasan.arslan@hll.com",
+    "name": "Hasan Arslan",
+    "phone": "05778889900",
+    "role": "leader",
+    "leader_id": null,
+    "region": "Ege",
+    "is_active": true,
+    "fcm_token": "fcm_token_6"
+  },
+  {
+    "id": "7",
+    "email": "admin@hll.com",
+    "name": "Ahmet Yıldırım",
+    "phone": "05889990011",
+    "role": "super_leader",
+    "leader_id": null,
+    "region": "Türkiye",
+    "is_active": true,
+    "fcm_token": "fcm_token_7"
+  }
+]
