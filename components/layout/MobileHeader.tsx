@@ -1,4 +1,8 @@
+'use client';
+
 import { User } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/lib/auth-context';
 
 interface MobileHeaderProps {
   title: string;
@@ -11,10 +15,19 @@ interface MobileHeaderProps {
 }
 
 export function MobileHeader({ title, subtitle, stats, color = 'primary' }: MobileHeaderProps) {
+  const router = useRouter();
+  const { user } = useAuth();
+
   const gradientColors = {
     primary: 'from-primary-600 to-primary-700',
     purple: 'from-purple-600 to-purple-700',
     orange: 'from-orange-600 to-orange-700',
+  };
+
+  const handleProfileClick = () => {
+    if (user?.role) {
+      router.push(`/${user.role}/profile`);
+    }
   };
 
   return (
@@ -25,9 +38,12 @@ export function MobileHeader({ title, subtitle, stats, color = 'primary' }: Mobi
             <p className="text-white/70 text-sm font-medium">{subtitle}</p>
             <h1 className="text-2xl font-bold">{title}</h1>
           </div>
-          <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+          <button 
+            onClick={handleProfileClick}
+            className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors active:scale-95"
+          >
             <User className="w-6 h-6" />
-          </div>
+          </button>
         </div>
         
         {stats && stats.length > 0 && (
