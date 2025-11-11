@@ -1054,49 +1054,66 @@ Sistem, reklam kampanyasına katkı koyan temsilcilere adil ve oransal lead dağ
 - Kredi bakiyesi 0 olan temsilciler lead alamaz
 - Temsilciler istedikleri zaman yeni kredi satın alabilir
 
-### Weighted Round Robin Algorithm
+### Hybrid Lead Distribution Algorithm
 
-**Algoritma Mantığı:**
+**Algoritma: Round-Robin Karışık + Günlük Deficit Telafisi**
+
+**Temel Mantık:**
 ```
-1. Yeni lead gelir
-2. Aktif temsilciler listelenir (credit_balance > 0)
-3. Her temsilcinin kredi oranı hesaplanır: ratio = credit / total_credits
-4. Her temsilcinin bugün alması gereken lead sayısı: expected = ratio * today_total_leads
-5. Her temsilcinin deficit değeri: deficit = expected - actual_assigned
-6. En yüksek deficit değerine sahip temsilciye lead atanır
-7. Temsilcinin credit_balance 1 azalır
+1. Her sabah günlük sıra oluşturulur (Round-Robin Karışık)
+2. Lead geldiğinde sıradaki temsilciye atanır
+3. Temsilci sıradan çıkar, en sona gider
+4. Her gün sonu deficit hesaplanır
+5. Ertesi sabah deficit'e göre sıra ayarlanır
 ```
 
-**Örnek Senaryo:**
+**Round-Robin Karışık Sıralama:**
 ```
 Temsilciler:
 - Ayşe: 5 kredi
 - Mehmet: 2 kredi
 - Zeynep: 1 kredi
-Toplam: 8 kredi
 
-5 dakikada 3 lead geldi:
+Sıra Oluşturma:
+Tur 1: [A, M, Z]  (herkes 1 slot)
+Tur 2: [A, M]     (Z bitti)
+Tur 3: [A]        (M bitti)
+Tur 4: [A]
+Tur 5: [A]
 
-Lead 1:
-- Ayşe deficit: 5/8 * 1 - 0 = 0.625 ← EN YÜKSEK
-- Mehmet deficit: 2/8 * 1 - 0 = 0.25
-- Zeynep deficit: 1/8 * 1 - 0 = 0.125
-→ Ayşe'ye atandı
+Final Sıra: [A,M,Z,A,M,A,A,A]
+```
 
-Lead 2:
-- Ayşe deficit: 5/8 * 2 - 1 = 0.25
-- Mehmet deficit: 2/8 * 2 - 0 = 0.5 ← EN YÜKSEK
-- Zeynep deficit: 1/8 * 2 - 0 = 0.25
-→ Mehmet'e atandı
+**Avantajlar:**
+- ✅ İlk 3 lead'de herkes garantili alır (Z mahrum kalmaz!)
+- ✅ Gerçek zamanlı dağıtım (lead geldiği anda)
+- ✅ Günlük telafi mekanizması (eksik alanlar ertesi gün öne geçer)
+- ✅ Haftalık adalet garantili
 
-Lead 3:
-- Ayşe deficit: 5/8 * 3 - 1 = 0.875 ← EN YÜKSEK
-- Mehmet deficit: 2/8 * 3 - 1 = -0.25
-- Zeynep deficit: 1/8 * 3 - 0 = 0.375
-→ Ayşe'ye atandı
+**Örnek Senaryo:**
+```
+Gün 1 - Sabah Sırası: [A,M,Z,A,M,A,A,A]
 
-Sonuç: Ayşe 2, Mehmet 1, Zeynep 0
-Oransal: Ayşe %62.5, Mehmet %25, Zeynep %12.5 ✅ Adil!
+8 lead geldi:
+Lead 1 → A (sıra: [M,Z,A,M,A,A,A,A])
+Lead 2 → M (sıra: [Z,A,M,A,A,A,A,M])
+Lead 3 → Z ✅ (sıra: [A,M,A,A,A,A,M,Z])
+Lead 4 → A (sıra: [M,A,A,A,A,M,Z,A])
+Lead 5 → M (sıra: [A,A,A,A,M,Z,A,M])
+Lead 6 → A (sıra: [A,A,A,M,Z,A,M,A])
+Lead 7 → A (sıra: [A,A,M,Z,A,M,A,A])
+Lead 8 → A (sıra: [A,M,Z,A,M,A,A,A])
+
+Sonuç: Ayşe 5, Mehmet 2, Zeynep 1
+Hedef: Ayşe 5 (62.5%), Mehmet 2 (25%), Zeynep 1 (12.5%) ✅ Tam hedefte!
+
+Gün 2 - Deficit Hesaplama:
+Ayşe: hedef 5, aldı 5 → deficit: 0
+Mehmet: hedef 2, aldı 2 → deficit: 0
+Zeynep: hedef 1, aldı 1 → deficit: 0
+
+Gün 2 - Sabah Sırası: (deficit yok, normal)
+[A,M,Z,A,M,A,A,A]
 ```
 
 ### Database Schema Updates
@@ -1128,15 +1145,17 @@ CREATE INDEX idx_credit_transactions_type ON credit_transactions(transaction_typ
 CREATE INDEX idx_credit_transactions_created_at ON credit_transactions(created_at DESC);
 ```
 
-### Edge Function: assign-lead-with-credits
+### Edge Functions
+
+**Function: create-daily-queue (Cron - Her sabah 00:00)**
 
 ```typescript
-interface AssignLeadInput {
-  lead_id: string;
-}
+// Her sabah günlük sırayı oluşturur
 
-async function assignLeadWithCredits(leadId: string) {
-  // 1. Aktif temsilcileri getir (credit_balance > 0)
+async function createDailyQueue() {
+  const today = new Date().toISOString().split('T')[0];
+  
+  // 1. Aktif temsilcileri getir
   const activeReps = await supabase
     .from('users')
     .select('id, name, credit_balance')
@@ -1145,63 +1164,125 @@ async function assignLeadWithCredits(leadId: string) {
     .gt('credit_balance', 0);
   
   if (activeReps.length === 0) {
-    throw new Error('No representatives with available credits');
+    return;
   }
   
-  // 2. Toplam kredi
-  const totalCredits = activeReps.reduce((sum, rep) => sum + rep.credit_balance, 0);
+  // 2. Dünün deficit'ini getir
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayStr = yesterday.toISOString().split('T')[0];
   
-  // 3. Bugün atanan lead'leri getir
-  const today = new Date().toISOString().split('T')[0];
-  const todayAssignments = await supabase
-    .from('leads')
-    .select('assigned_to')
-    .gte('assigned_at', `${today}T00:00:00Z`)
-    .lte('assigned_at', `${today}T23:59:59Z`);
+  const deficits = await supabase
+    .from('daily_deficit_log')
+    .select('user_id, cumulative_deficit')
+    .eq('date', yesterdayStr);
   
-  const totalLeadsToday = todayAssignments.length + 1; // +1 for current lead
-  
-  // 4. Her temsilcinin deficit'ini hesapla
-  const repsWithDeficit = activeReps.map(rep => {
-    const ratio = rep.credit_balance / totalCredits;
-    const expectedLeads = ratio * totalLeadsToday;
-    const actualLeads = todayAssignments.filter(l => l.assigned_to === rep.id).length;
-    const deficit = expectedLeads - actualLeads;
-    
-    return { ...rep, ratio, expectedLeads, actualLeads, deficit };
+  const deficitMap = {};
+  deficits.forEach(d => {
+    deficitMap[d.user_id] = d.cumulative_deficit;
   });
   
-  // 5. En yüksek deficit'e sahip temsilciyi seç
-  const selectedRep = repsWithDeficit.sort((a, b) => b.deficit - a.deficit)[0];
+  // 3. Her temsilci için slot sayısını hesapla
+  const queue = [];
+  const participantSlots = activeReps.map(rep => {
+    const deficit = deficitMap[rep.id] || 0;
+    let slots = rep.credit_balance;
+    
+    // Deficit telafisi
+    if (deficit > 0) {
+      slots += Math.floor(deficit);
+    } else if (deficit < 0) {
+      slots = Math.max(1, slots + Math.ceil(deficit));
+    }
+    
+    return { ...rep, slots, remaining: slots };
+  });
   
-  // 6. Lead'i ata
+  // 4. Round-Robin Karışık sıralama
+  while (participantSlots.some(p => p.remaining > 0)) {
+    const activeInRound = participantSlots.filter(p => p.remaining > 0);
+    
+    // Aynı turdakileri karıştır
+    shuffle(activeInRound);
+    
+    // Her birine 1 slot ver
+    for (const p of activeInRound) {
+      queue.push({
+        user_id: p.id,
+        user_name: p.name,
+        position: queue.length
+      });
+      p.remaining--;
+    }
+  }
+  
+  // 5. Sırayı veritabanına kaydet
+  await supabase
+    .from('daily_distribution_queue')
+    .delete()
+    .eq('date', today);
+  
+  await supabase
+    .from('daily_distribution_queue')
+    .insert(queue.map(q => ({ ...q, date: today })));
+  
+  return queue;
+}
+```
+
+**Function: assign-lead-from-queue (Lead geldiğinde)**
+
+```typescript
+async function assignLeadFromQueue(leadId: string) {
+  const today = new Date().toISOString().split('T')[0];
+  
+  // 1. Bugünün sırasını getir
+  const queue = await supabase
+    .from('daily_distribution_queue')
+    .select('*')
+    .eq('date', today)
+    .order('position', { ascending: true })
+    .limit(1)
+    .single();
+  
+  if (!queue) {
+    throw new Error('No queue available for today');
+  }
+  
+  // 2. Lead'i ata
   await supabase
     .from('leads')
     .update({ 
-      assigned_to: selectedRep.id,
+      assigned_to: queue.user_id,
       assigned_at: new Date().toISOString()
     })
     .eq('id', leadId);
   
-  // 7. Kredi bakiyesini azalt
+  // 3. Sıradan çıkar
   await supabase
-    .from('users')
-    .update({ 
-      credit_balance: selectedRep.credit_balance - 1 
-    })
-    .eq('id', selectedRep.id);
+    .from('daily_distribution_queue')
+    .delete()
+    .eq('id', queue.id);
   
-  // 8. Transaction kaydı oluştur
+  // 4. En sona ekle
+  const maxPosition = await supabase
+    .from('daily_distribution_queue')
+    .select('position')
+    .eq('date', today)
+    .order('position', { ascending: false })
+    .limit(1)
+    .single();
+  
   await supabase
-    .from('credit_transactions')
+    .from('daily_distribution_queue')
     .insert({
-      user_id: selectedRep.id,
-      credits: -1,
-      transaction_type: 'used',
-      lead_id: leadId
+      date: today,
+      user_id: queue.user_id,
+      user_name: queue.user_name,
+      position: (maxPosition?.position || 0) + 1
     });
   
-  // 9. Event kaydı
+  // 5. Event kaydı
   await supabase
     .from('lead_events')
     .insert({
@@ -1209,13 +1290,74 @@ async function assignLeadWithCredits(leadId: string) {
       event_type: 'assigned',
       actor_id: null,
       metadata: { 
-        assigned_to: selectedRep.id,
-        algorithm: 'weighted_round_robin',
-        deficit: selectedRep.deficit
+        assigned_to: queue.user_id,
+        algorithm: 'round_robin_mixed',
+        queue_position: queue.position
       }
     });
   
-  return selectedRep;
+  return queue;
+}
+```
+
+**Function: calculate-daily-deficit (Cron - Her gece 23:55)**
+
+```typescript
+async function calculateDailyDeficit() {
+  const today = new Date().toISOString().split('T')[0];
+  const weekStart = getWeekStart(new Date());
+  
+  // 1. Aktif katılımcıları getir
+  const participants = await supabase
+    .from('users')
+    .select('id, name, credit_balance')
+    .eq('role', 'representative')
+    .eq('is_active', true);
+  
+  const totalCredits = participants.reduce((sum, p) => sum + p.credit_balance, 0);
+  
+  // 2. Hafta başından bugüne kadar toplam lead
+  const weekLeads = await supabase
+    .from('leads')
+    .select('assigned_to')
+    .gte('assigned_at', weekStart)
+    .lte('assigned_at', `${today}T23:59:59Z`);
+  
+  const totalLeadsThisWeek = weekLeads.length;
+  
+  // 3. Her temsilci için deficit hesapla
+  for (const p of participants) {
+    const targetShare = p.credit_balance / totalCredits;
+    const targetLeads = targetShare * totalLeadsThisWeek;
+    const actualLeads = weekLeads.filter(l => l.assigned_to === p.id).length;
+    const deficit = targetLeads - actualLeads;
+    
+    // Önceki günün kümülatif deficitini al
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    
+    const prevDeficit = await supabase
+      .from('daily_deficit_log')
+      .select('cumulative_deficit')
+      .eq('user_id', p.id)
+      .eq('date', yesterdayStr)
+      .single();
+    
+    const cumulativeDeficit = (prevDeficit?.cumulative_deficit || 0) + deficit;
+    
+    // Kaydet
+    await supabase
+      .from('daily_deficit_log')
+      .insert({
+        user_id: p.id,
+        date: today,
+        target_leads: targetLeads,
+        actual_leads: actualLeads,
+        deficit: deficit,
+        cumulative_deficit: cumulativeDeficit
+      });
+  }
 }
 ```
 

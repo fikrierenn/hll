@@ -215,16 +215,18 @@ HLL (HommLink Lead), network marketing organizasyonları için geliştirilmiş e
 
 ### Requirement 17
 
-**User Story:** Sistem yöneticisi olarak, lead'lerin temsilcilere adil ve oransal olarak dağıtılmasını istiyorum, böylece herkes katkısı oranında lead alır.
+**User Story:** Sistem yöneticisi olarak, lead'lerin temsilcilere adil ve oransal olarak dağıtılmasını istiyorum, böylece herkes katkısı oranında lead alır ve hiç kimse mahrum kalmaz.
 
 #### Acceptance Criteria
 
-1. THE HLL System SHALL lead atama algoritmasında Weighted Round Robin yöntemini kullanmalı
-2. WHEN yeni lead geldiğinde, THE HLL System SHALL her temsilcinin credit oranını hesaplamalı (credit / total_credits)
-3. THE HLL System SHALL her temsilcinin bugün alması gereken lead sayısını hesaplamalı (oran * bugün gelen toplam lead)
-4. THE HLL System SHALL her temsilcinin "deficit" değerini hesaplamalı (alması gereken - aldığı)
-5. THE HLL System SHALL en yüksek deficit değerine sahip temsilciye lead'i atamalı
-6. THE HLL System SHALL bu algoritma ile tüm temsilcilerin katkı oranında lead almasını garanti etmeli
+1. THE HLL System SHALL lead atama algoritmasında Hybrid Round-Robin (Round-Robin Karışık + Günlük Deficit Telafisi) yöntemini kullanmalı
+2. WHEN her sabah 00:00'da, THE HLL System SHALL günlük dağıtım sırasını oluşturmalı
+3. THE HLL System SHALL sıra oluştururken Round-Robin Karışık mantığını kullanmalı (her tur tüm katılımcılar 1'er slot alır, kredisi biten çıkar)
+4. WHEN yeni lead geldiğinde, THE HLL System SHALL sıradaki temsilciye lead'i atamalı ve temsilciyi sıradan çıkarıp en sona eklemeli
+5. WHEN her gece 23:55'te, THE HLL System SHALL günlük deficit hesaplamalı (hedef - gerçek)
+6. WHEN ertesi sabah sıra oluşturulurken, THE HLL System SHALL deficit'e göre slot sayısını ayarlamalı (eksik alanlar daha fazla slot alır)
+7. THE HLL System SHALL ilk 3 lead'de tüm katılımcıların garantili lead almasını sağlamalı
+8. THE HLL System SHALL hafta sonunda tüm temsilcilerin katkı oranında lead almış olmasını garanti etmeli
 
 ### Requirement 18
 
