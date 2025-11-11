@@ -14,11 +14,15 @@ export default function LeaderSettingsPage() {
   const [teamMembers, setTeamMembers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditAdCreditsModal, setShowEditAdCreditsModal] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<User | null>(null);
+  const [newAdCredits, setNewAdCredits] = useState(0);
   const [newRep, setNewRep] = useState({
     name: '',
     email: '',
     phone: '',
-    region: ''
+    region: '',
+    ad_credits: 10
   });
 
   useEffect(() => {
@@ -56,12 +60,13 @@ export default function LeaderSettingsPage() {
       leader_id: '4',
       region: newRep.region || 'İstanbul',
       is_active: true,
-      fcm_token: ''
+      fcm_token: '',
+      ad_credits: newRep.ad_credits
     };
 
     setTeamMembers([...teamMembers, newUser]);
     setShowAddModal(false);
-    setNewRep({ name: '', email: '', phone: '', region: '' });
+    setNewRep({ name: '', email: '', phone: '', region: '', ad_credits: 10 });
     
     alert(`✅ ${newRep.name} başarıyla eklendi!`);
   };
@@ -76,6 +81,27 @@ export default function LeaderSettingsPage() {
     
     const member = updatedMembers.find(m => m.id === repId);
     alert(`${member?.name} ${member?.is_active ? 'aktif' : 'pasif'} edildi`);
+  };
+
+  const openEditAdCredits = (member: User) => {
+    setSelectedMember(member);
+    setNewAdCredits(member.ad_credits || 0);
+    setShowEditAdCreditsModal(true);
+  };
+
+  const handleUpdateAdCredits = () => {
+    if (!selectedMember) return;
+
+    const updatedMembers = teamMembers.map(member =>
+      member.id === selectedMember.id
+        ? { ...member, ad_credits: newAdCredits }
+        : member
+    );
+    setTeamMembers(updatedMembers);
+    setShowEditAdCreditsModal(false);
+    setSelectedMember(null);
+    
+    alert(`✅ ${selectedMember.name} için reklam hakkı ${newAdCredits} olarak güncellendi!`);
   };
 
   if (loading) {
@@ -120,7 +146,7 @@ export default function LeaderSettingsPage() {
                 key={member.id}
                 className="bg-white rounded-2xl shadow-sm p-4 hover:shadow-md transition-all"
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-3">
                   <div className="flex-1">
                     <h3 className="font-bold text-gray-900 text-lg">{member.name}</h3>
                     <p className="text-sm text-gray-500">{member.email}</p>
@@ -137,14 +163,26 @@ export default function LeaderSettingsPage() {
                     )}
                   </button>
                 </div>
-                <div className="mt-2">
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                    member.is_active 
-                      ? 'bg-green-100 text-green-700' 
-                      : 'bg-gray-100 text-gray-600'
-                  }`}>
-                    {member.is_active ? 'Aktif' : 'Pasif'}
-                  </span>
+                
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                      member.is_active 
+                        ? 'bg-green-100 text-green-700' 
+                        : 'bg-gray-100 text-gray-600'
+                    }`}>
+                      {member.is_active ? 'Aktif' : 'Pasif'}
+                    </span>
+                    <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700">
+                      🎯 {member.ad_credits || 0} Reklam Hakkı
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => openEditAdCredits(member)}
+                    className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded-lg text-xs font-semibold hover:bg-purple-200 active:scale-95 transition-all"
+                  >
+                    Düzenle
+                  </button>
                 </div>
               </div>
             ))}
@@ -200,6 +238,64 @@ export default function LeaderSettingsPage() {
 
       <Footer />
       <BottomNav role="leader" />
+
+      {/* Edit Ad Credits Modal */}
+      {showEditAdCreditsModal && selectedMember && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b">
+              <h3 className="text-xl font-bold text-gray-900">Reklam Hakkı Düzenle</h3>
+              <button
+                onClick={() => setShowEditAdCreditsModal(false)}
+                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+              >
+                <X className="w-5 h-5 text-gray-500" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 space-y-4">
+              <div className="bg-purple-50 rounded-xl p-4 mb-4">
+                <p className="text-sm text-gray-600 mb-1">Temsilci</p>
+                <p className="text-lg font-bold text-gray-900">{selectedMember.name}</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Haftalık Reklam Hakkı
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  value={newAdCredits}
+                  onChange={(e) => setNewAdCredits(parseInt(e.target.value) || 0)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-lg font-semibold text-center"
+                />
+                <p className="text-xs text-gray-500 mt-2">
+                  Bu temsilciye haftalık kaç reklam atanacağını belirler
+                </p>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex gap-3 p-6 border-t">
+              <button
+                onClick={() => setShowEditAdCreditsModal(false)}
+                className="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 active:scale-95 transition-all"
+              >
+                İptal
+              </button>
+              <button
+                onClick={handleUpdateAdCredits}
+                className="flex-1 px-4 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 active:scale-95 transition-all shadow-sm"
+              >
+                Güncelle
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Add Representative Modal */}
       {showAddModal && (
@@ -268,6 +364,23 @@ export default function LeaderSettingsPage() {
                   placeholder="Örn: İstanbul"
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Haftalık Reklam Hakkı
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  value={newRep.ad_credits}
+                  onChange={(e) => setNewRep({ ...newRep, ad_credits: parseInt(e.target.value) || 0 })}
+                  placeholder="10"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Bu temsilciye haftalık kaç reklam atanacağını belirler
+                </p>
               </div>
             </div>
 
