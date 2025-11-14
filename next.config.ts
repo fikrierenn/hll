@@ -8,7 +8,12 @@ const withPWA = require('next-pwa')({
 });
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
+  // Trailing slash ekle (Capacitor için)
+  trailingSlash: true,
 };
 
 export default withPWA(nextConfig);
