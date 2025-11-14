@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Phone, MessageCircle, Clock, MapPin } from 'lucide-react';
 import { Lead } from '@/types';
-import { maskPhoneNumber, formatRelativeTime, getStatusLabel, getStatusColor } from '@/lib/utils';
+import { maskPhoneNumber, normalizePhoneNumber, formatRelativeTime, getStatusLabel, getStatusColor } from '@/lib/utils';
 
 interface LeadCardProps {
   lead: Lead;
@@ -59,7 +59,8 @@ export function LeadCard({ lead, href }: LeadCardProps) {
           <button 
             onClick={(e) => {
               e.preventDefault();
-              window.location.href = `tel:${lead.phone}`;
+              const normalizedPhone = normalizePhoneNumber(lead.phone);
+              window.location.href = `tel:${normalizedPhone}`;
             }}
             className="flex items-center justify-center gap-2 px-4 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 active:scale-95 transition-all shadow-sm"
           >
@@ -69,7 +70,10 @@ export function LeadCard({ lead, href }: LeadCardProps) {
           <button 
             onClick={(e) => {
               e.preventDefault();
-              window.open(`https://wa.me/${lead.phone.replace(/\D/g, '')}`, '_blank');
+              const normalizedPhone = normalizePhoneNumber(lead.phone);
+              // WhatsApp format: remove + sign
+              const whatsappNumber = normalizedPhone.replace('+', '');
+              window.open(`https://wa.me/${whatsappNumber}`, '_blank');
             }}
             className="flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 active:scale-95 transition-all shadow-sm"
           >

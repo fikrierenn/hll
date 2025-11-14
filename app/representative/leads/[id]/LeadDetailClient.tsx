@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { mockApi } from '@/lib/mock-data';
 import { Lead, LeadEvent } from '@/types';
-import { formatDate, getStatusColor, getStatusLabel, getEventTypeLabel } from '@/lib/utils';
+import { formatDate, getStatusColor, getStatusLabel, getEventTypeLabel, normalizePhoneNumber } from '@/lib/utils';
 import { ArrowLeft, Phone, MessageCircle, Clock, CheckCircle2, FileText } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -64,7 +64,8 @@ export default function LeadDetailClient({ leadId }: LeadDetailClientProps) {
       const eventsData = await mockApi.getLeadEventsByLeadId(lead.id);
       setEvents(eventsData as LeadEvent[]);
       
-      window.location.href = `tel:${lead.phone}`;
+      const normalizedPhone = normalizePhoneNumber(lead.phone);
+      window.location.href = `tel:${normalizedPhone}`;
       toast.success('Arama kaydedildi');
     } catch (error) {
       console.error('Error:', error);
@@ -89,8 +90,11 @@ export default function LeadDetailClient({ leadId }: LeadDetailClientProps) {
       const eventsData = await mockApi.getLeadEventsByLeadId(lead.id);
       setEvents(eventsData as LeadEvent[]);
       
+      const normalizedPhone = normalizePhoneNumber(lead.phone);
+      // WhatsApp format: remove + sign
+      const whatsappNumber = normalizedPhone.replace('+', '');
       const message = encodeURIComponent('Merhaba, HommLink Lead sisteminden ulaşıyorum.');
-      window.open(`https://wa.me/${lead.phone.replace(/\s/g, '')}?text=${message}`, '_blank');
+      window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
       
       toast.success('WhatsApp mesajı gönderildi');
     } catch (error) {

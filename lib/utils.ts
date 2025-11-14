@@ -1,15 +1,55 @@
 import { format, formatDistanceToNow } from 'date-fns';
 import { tr } from 'date-fns/locale';
 
-// Phone number masking
+/**
+ * Normalize phone number to international format (+90...)
+ * Handles various formats: 05xx, +905xx, 905xx, +90 5xx, etc.
+ */
+export function normalizePhoneNumber(phone: string): string {
+  if (!phone) return '';
+  
+  // Remove all non-digit characters
+  let cleaned = phone.replace(/\D/g, '');
+  
+  // Remove leading zeros
+  cleaned = cleaned.replace(/^0+/, '');
+  
+  // If starts with 90, it's already country code
+  if (cleaned.startsWith('90')) {
+    return `+${cleaned}`;
+  }
+  
+  // If it's 10 digits (5xxxxxxxxx), add country code
+  if (cleaned.length === 10 && cleaned.startsWith('5')) {
+    return `+90${cleaned}`;
+  }
+  
+  // If it's 11 digits starting with 0 (05xxxxxxxxx), remove 0 and add country code
+  if (cleaned.length === 11 && cleaned.startsWith('05')) {
+    return `+90${cleaned.slice(1)}`;
+  }
+  
+  // Default: assume it needs +90 prefix
+  return `+90${cleaned}`;
+}
+
+/**
+ * Format phone number for display (masked)
+ * Format: 05xx *** 67 89
+ */
 export function maskPhoneNumber(phone: string): string {
   if (!phone || phone.length < 10) return phone;
   
-  // Format: 05xx *** 67 89
-  const cleaned = phone.replace(/\D/g, '');
-  if (cleaned.length === 11) {
-    return `${cleaned.slice(0, 4)} *** ${cleaned.slice(7, 9)} ${cleaned.slice(9)}`;
+  // Normalize first
+  const normalized = normalizePhoneNumber(phone);
+  const cleaned = normalized.replace(/\D/g, '');
+  
+  // Format: 0xxx *** xx xx (Turkish format)
+  if (cleaned.length === 12 && cleaned.startsWith('90')) {
+    const local = cleaned.slice(2); // Remove 90
+    return `0${local.slice(0, 3)} *** ${local.slice(6, 8)} ${local.slice(8)}`;
   }
+  
   return phone;
 }
 
