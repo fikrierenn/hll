@@ -1,5 +1,5 @@
 // Enums
-export type UserRole = 'representative' | 'leader' | 'super_leader';
+export type UserRole = 'representative' | 'leader';
 export type LeadStatus = 'new' | 'contacted' | 'converted' | 'lost';
 export type EventType = 'created' | 'assigned' | 'called' | 'whatsapp' | 'status_changed';
 

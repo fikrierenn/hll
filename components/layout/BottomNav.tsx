@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Home, BarChart3, User, Users, TrendingUp, Settings } from 'lucide-react';
 
 interface BottomNavProps {
-  role: 'representative' | 'leader' | 'super_leader';
+  role: 'representative' | 'leader';
 }
 
 export function BottomNav({ role }: BottomNavProps) {
@@ -23,11 +23,6 @@ export function BottomNav({ role }: BottomNavProps) {
       { href: '/leader/dashboard', icon: BarChart3, label: 'Performans' },
       { href: '/leader/profile', icon: User, label: 'Profil' },
       { href: '/leader/settings', icon: Settings, label: 'Ayarlar' },
-    ],
-    super_leader: [
-      { href: '/super-leader', icon: TrendingUp, label: 'Genel' },
-      { href: '/super-leader/analytics', icon: BarChart3, label: 'Analiz' },
-      { href: '/super-leader/profile', icon: User, label: 'Profil' },
     ],
   };
 

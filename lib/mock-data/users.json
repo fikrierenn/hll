@@ -68,16 +68,5 @@
     "region": "Ege",
     "is_active": true,
     "fcm_token": "fcm_token_6"
-  },
-  {
-    "id": "7",
-    "email": "admin@hll.com",
-    "name": "Ahmet Yıldırım",
-    "phone": "05889990011",
-    "role": "super_leader",
-    "leader_id": null,
-    "region": "Türkiye",
-    "is_active": true,
-    "fcm_token": "fcm_token_7"
   }
 ]
