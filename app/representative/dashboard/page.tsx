@@ -10,6 +10,7 @@ import { MobileHeader } from '@/components/layout/MobileHeader';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { Footer } from '@/components/layout/Footer';
 import { StatCard } from '@/components/ui/StatCard';
+import { DonutChart, BarChart, LineChart } from '@/components/ui';
 
 export default function RepresentativeDashboard() {
   const router = useRouter();
@@ -168,6 +169,34 @@ export default function RepresentativeDashboard() {
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Lead Status Chart */}
+        <div className="bg-white rounded-2xl shadow-sm p-6">
+          <h3 className="font-bold text-gray-900 mb-6">Lead Dağılımı</h3>
+          <DonutChart
+            data={[
+              { label: 'Yeni', value: newLeadsCount, color: '#3b82f6' },
+              { label: 'Görüşüldü', value: contactedLeadsCount, color: '#eab308' },
+              { label: 'Satış', value: convertedLeadsCount, color: '#22c55e' },
+              { label: 'Kayıp', value: lostLeadsCount, color: '#ef4444' },
+            ]}
+          />
+        </div>
+
+        {/* Weekly Performance */}
+        <div className="bg-white rounded-2xl shadow-sm p-6">
+          <h3 className="font-bold text-gray-900 mb-6">Haftalık Performans</h3>
+          <BarChart
+            data={[
+              { label: 'Pzt', value: 3, color: '#3b82f6' },
+              { label: 'Sal', value: 5, color: '#3b82f6' },
+              { label: 'Çar', value: 4, color: '#3b82f6' },
+              { label: 'Per', value: 7, color: '#3b82f6' },
+              { label: 'Cum', value: 6, color: '#3b82f6' },
+            ]}
+            height={180}
+          />
         </div>
 
         {/* Recent Leads */}
